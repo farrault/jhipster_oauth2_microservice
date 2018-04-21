@@ -18,27 +18,33 @@ public class OAuth2TokenServicesConfiguration {
 
     private static final String OAUTH2_AUTHORITIES_ATTRIBUTE = "roles";
     
-    private final ResourceServerProperties resourceServerProperties;
-	 
-	public OAuth2TokenServicesConfiguration(ResourceServerProperties resourceServerProperties) {
-		this.resourceServerProperties = resourceServerProperties;
-	}
+//    private final ResourceServerProperties resourceServerProperties;
+//	 
+//	public OAuth2TokenServicesConfiguration(ResourceServerProperties resourceServerProperties) {
+//		this.resourceServerProperties = resourceServerProperties;
+//	}
 	
-	/*
-	 * 
-	 * This UserInfoTokenServices will be used in both Gateway and MicroService cases
-	 * As it is a ResourceServerTokenServices it will disable all Spring Boot default behaviour 
-	 * 
-	 */
-    @Bean
-    public UserInfoTokenServices userInfoTokenServices(PrincipalExtractor principalExtractor, AuthoritiesExtractor authoritiesExtractor) {
-        UserInfoTokenServices userInfoTokenServices =
-            new CachedUserInfoTokenServices(resourceServerProperties.getUserInfoUri(), resourceServerProperties.getClientId());
-
-        userInfoTokenServices.setPrincipalExtractor(principalExtractor);
-        userInfoTokenServices.setAuthoritiesExtractor(authoritiesExtractor);
-        return userInfoTokenServices;
-    }
+	// In fact a gateway should NOT cache the access_token resolution
+    // it occurs only at login time
+    // 
+    // Commenting this, will enabled Spring Boot configuration based on the presence of : 
+    // security.oauth2.resource.user-info-uri
+	
+//	/*
+//	 * 
+//	 * This UserInfoTokenServices will be used in both Gateway and MicroService cases
+//	 * As it is a ResourceServerTokenServices it will disable all Spring Boot default behaviour 
+//	 * 
+//	 */
+//    @Bean
+//    public UserInfoTokenServices userInfoTokenServices(PrincipalExtractor principalExtractor, AuthoritiesExtractor authoritiesExtractor) {
+//        UserInfoTokenServices userInfoTokenServices =
+//            new CachedUserInfoTokenServices(resourceServerProperties.getUserInfoUri(), resourceServerProperties.getClientId());
+//
+//        userInfoTokenServices.setPrincipalExtractor(principalExtractor);
+//        userInfoTokenServices.setAuthoritiesExtractor(authoritiesExtractor);
+//        return userInfoTokenServices;
+//    }
 
     @Bean
     public PrincipalExtractor principalExtractor() {

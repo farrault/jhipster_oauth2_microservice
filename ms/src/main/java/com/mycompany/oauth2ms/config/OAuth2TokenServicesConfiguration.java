@@ -26,8 +26,8 @@ public class OAuth2TokenServicesConfiguration {
 	
 	/*
 	 * 
-	 * This UserInfoTokenServices will be used in both Gateway and MicroService cases
-	 * As it is a ResourceServerTokenServices it will disable all Spring Boot default behaviour 
+	 * Only the microservices should cache the access_token to Authentication mapping
+	 * Note : as UserInfoTokenServices is a ResourceServerTokenServices it will disable all Spring Boot default behaviour 
 	 * 
 	 */
     @Bean
