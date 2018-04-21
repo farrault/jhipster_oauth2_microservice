@@ -124,10 +124,10 @@ security:
             client-authentication-scheme: header
         resource:
             user-info-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
-            token-info-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token/introspect
-            prefer-token-info: false
-            jwk:
-                key-set-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/certs
+#            token-info-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token/introspect
+#            prefer-token-info: false
+#            jwk:
+#                key-set-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/certs
 
 server:
     servlet:
