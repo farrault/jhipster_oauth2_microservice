@@ -100,8 +100,6 @@ spring:
 #
 # To use Okta, your settings should resemble the following:
 #
-# accessTokenUri: https://{yourOktaDomain}.com/oauth2/default/v1/token
-# userAuthorizationUri: https://{yourOktaDomain}.com/oauth2/default/v1/authorize
 # clientId: {copy after creating an OIDC app}
 # clientSecret: {copy after creating an OIDC app}
 # userInfoUri: https://{yourOktaDomain}.com/oauth2/default/v1/userinfo
@@ -116,8 +114,6 @@ spring:
 security:
     oauth2:
         client:
-            access-token-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token
-            user-authorization-uri: http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/auth
             client-id: internal
             client-secret: internal
             authentication-scheme: header

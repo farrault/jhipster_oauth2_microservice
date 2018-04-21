@@ -27,12 +27,6 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
         this.problemSupport = problemSupport;
     }
 
-    @Bean
-    @Qualifier("authorizationHeaderRequestMatcher")
-    public RequestMatcher authorizationHeaderRequestMatcher() {
-        return new RequestHeaderRequestMatcher("Authorization");
-    }
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -48,8 +42,11 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
         .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        .and()
+//         If there is other endpoints not protected by OAuth2 we could restrict the /path protected by this specific Spring Security configurations
+//            .requestMatchers()
+//            	.antMatchers("/api/**", "/management/**") 
         .and()
-            .requestMatcher(authorizationHeaderRequestMatcher())
             .authorizeRequests()
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/**").authenticated()
