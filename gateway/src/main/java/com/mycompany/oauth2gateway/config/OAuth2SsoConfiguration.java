@@ -2,7 +2,6 @@ package com.mycompany.oauth2gateway.config;
 
 import com.mycompany.oauth2gateway.security.AuthoritiesConstants;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +11,6 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 import io.github.jhipster.security.AjaxLogoutSuccessHandler;
@@ -22,13 +19,10 @@ import io.github.jhipster.security.AjaxLogoutSuccessHandler;
 @Configuration
 public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final RequestMatcher authorizationHeaderRequestMatcher;
-
     private final CorsFilter corsFilter;
 
-    public OAuth2SsoConfiguration(@Qualifier("authorizationHeaderRequestMatcher")
-                                  RequestMatcher authorizationHeaderRequestMatcher, CorsFilter corsFilter) {
-        this.authorizationHeaderRequestMatcher = authorizationHeaderRequestMatcher;
+    public OAuth2SsoConfiguration(
+              CorsFilter corsFilter) {
         this.corsFilter = corsFilter;
     }
     
@@ -51,7 +45,6 @@ public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
             .logoutUrl("/api/logout")
             .logoutSuccessHandler(ajaxLogoutSuccessHandler())
         .and()
-            .requestMatcher(new NegatedRequestMatcher(authorizationHeaderRequestMatcher))
             .authorizeRequests()
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/**").authenticated()
