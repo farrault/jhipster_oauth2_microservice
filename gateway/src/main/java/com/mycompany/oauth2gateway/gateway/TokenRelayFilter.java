@@ -4,21 +4,30 @@ import com.mycompany.oauth2gateway.security.oauth2.AuthorizationHeaderUtil;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class TokenRelayFilter extends ZuulFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
+    
+    private final AuthorizationHeaderUtil authorizationHeaderUtil;
+    
+    public TokenRelayFilter(AuthorizationHeaderUtil authorizationHeaderUtil) {
+		super();
+		this.authorizationHeaderUtil = authorizationHeaderUtil;
+	}
 
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         // Add specific authorization headers for OAuth2
-        if (AuthorizationHeaderUtil.getAuthorizationHeader().isPresent()) {
-            ctx.addZuulRequestHeader(AUTHORIZATION_HEADER,
-                AuthorizationHeaderUtil.getAuthorizationHeader().get());
-
+        Optional<String> authorizationHeader = authorizationHeaderUtil.getAuthorizationHeaderFromOAuth2Context();
+		if (authorizationHeader.isPresent()) {
+            ctx.addZuulRequestHeader(AUTHORIZATION_HEADER,authorizationHeader.get());
         }
         return null;
     }

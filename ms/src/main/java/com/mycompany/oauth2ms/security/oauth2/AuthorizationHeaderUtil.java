@@ -7,8 +7,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 public class AuthorizationHeaderUtil {
+	
+	
+    /*
+     *  A micro-service is a OAuth2 Resource Server :  
+     *  There is no OAuth2ClientContext 
+     *  By the accesstoken is accessible in the OAuth2AuthenticationDetails ...
+     *     but only because we used a UserInfo Endpoint here
+     */
 
-    public static Optional<String> getAuthorizationHeader() {
+    public static Optional<String> getAuthorizationHeaderFromSecurityContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Object details = authentication.getDetails();

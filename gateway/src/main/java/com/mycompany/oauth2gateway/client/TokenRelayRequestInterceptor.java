@@ -1,20 +1,29 @@
 package com.mycompany.oauth2gateway.client;
 
+import java.util.Optional;
+
 import com.mycompany.oauth2gateway.security.oauth2.AuthorizationHeaderUtil;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
 public class TokenRelayRequestInterceptor implements RequestInterceptor {
 
     public static final String AUTHORIZATION = "Authorization";
 
-    @Override
+    private final AuthorizationHeaderUtil authorizationHeaderUtil;
+    
+    public TokenRelayRequestInterceptor(AuthorizationHeaderUtil authorizationHeaderUtil) {
+		super();
+		this.authorizationHeaderUtil = authorizationHeaderUtil;
+	}
+
+
+	@Override
     public void apply(RequestTemplate template) {
-        if (AuthorizationHeaderUtil.getAuthorizationHeader().isPresent()) {
-            template.header(AUTHORIZATION, AuthorizationHeaderUtil.getAuthorizationHeader().get());
+        Optional<String> authorizationHeader = authorizationHeaderUtil.getAuthorizationHeaderFromOAuth2Context();
+		if (authorizationHeader.isPresent()) {
+            template.header(AUTHORIZATION, authorizationHeader.get());
         }
     }
 }
