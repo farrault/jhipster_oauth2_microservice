@@ -74,6 +74,15 @@ public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
             .anyRequest().permitAll();
     }
     
+    
+    /**
+     * 
+     * THIS OAuth2RestTemplate is used by org.springframework.cloud.security.oauth2.proxy.OAuth2TokenRelayFilter
+     * from Spring Cloud Security
+     * to REFRESH the access_token when needed 
+     * 
+     */
+    
     @Bean
     public OAuth2RestTemplate oAuth2RestTemplate(
         OAuth2ProtectedResourceDetails oAuth2ProtectedResourceDetails,

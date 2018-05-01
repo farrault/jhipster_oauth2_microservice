@@ -22,6 +22,16 @@ public class AuthorizationHeaderUtil {
 		super();
 		this.oAuth2RestTemplate = oAuth2RestTemplate;
 	}
+    
+    /*
+     * 
+     * ONLY USEFULL for TokenRelayRequestInterceptor now : 
+     * For @AuthorizedFeignClient annotated Feign Client in the gateway ...
+     * 
+     * Does the gateway need explicit FeignClient ?
+     * 
+     * 
+     */
 
 	/*
      *  In a gateway the access_token is above all in the OAuth2ClientContext, because a gateway is a "OAuth2 Client" 
