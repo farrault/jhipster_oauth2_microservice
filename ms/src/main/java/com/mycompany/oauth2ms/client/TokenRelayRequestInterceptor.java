@@ -13,8 +13,8 @@ public class TokenRelayRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        if (AuthorizationHeaderUtil.getAuthorizationHeader().isPresent()) {
-            template.header(AUTHORIZATION, AuthorizationHeaderUtil.getAuthorizationHeader().get());
+        if (AuthorizationHeaderUtil.getAuthorizationHeaderFromSecurityContext().isPresent()) {
+            template.header(AUTHORIZATION, AuthorizationHeaderUtil.getAuthorizationHeaderFromSecurityContext().get());
         }
     }
 }
